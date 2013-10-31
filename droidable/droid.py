@@ -4,10 +4,10 @@ from droidable.script import Script
 
 class Droid:
     """Creates a droid"""
-    _devices = Collection()
-    _scripts = Collection()
+    _devices = {}
+    _scripts = {}
     _conditions_tree = {}
-    _conditions_hashes = {}
+    conditions_hashes = {}
     
     # Grouped by kind
     _triggers = {}
@@ -17,17 +17,17 @@ class Droid:
         self.generate_conditions()
         
     def add_device (self, device):
-        _devices.add(device)
+        self._devices[device.ID] = device
 
     def add_script (self, script):
-        _scripts.add(script)
+        pass
         
     def generate_conditions(self):
-        for script in _script.collection():
-            print script.conditions_hash
+        for script in self._scripts.iteritems():
+            self.conditions_hashes[script.conditions_hash] = script
         
     def run():
         print "Droid running"
         
-        for script in _scripts: 
+        for script in self._scripts: 
             pass            

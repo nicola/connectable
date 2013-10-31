@@ -14,8 +14,9 @@ class Script:
     actions = {}
     conditions_hash = ""
     conditions_tree = {}
-    def __init__(self, dictionary):
+    def __init__(self, ID, dictionary):
         # TODO accept also objects
+        self.ID = ID
         self.triggers = dictionary['triggers']
         self.actions = dictionary['actions']
         self.generate_conditions()

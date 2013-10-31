@@ -2,7 +2,7 @@ class Property(object):
     def __init__(self, device, dictionary):
         self.device = device
         if ('name'      in dictionary):   self.name = dictionary['name']
-        self.fields = dictionary['fields']
+        if ('fields'    in dictionary): self.fields = dictionary['fields']
 
 class Trigger(Property):
     def __init__(self, device, dictionary):

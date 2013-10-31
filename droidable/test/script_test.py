@@ -20,7 +20,7 @@ class ScriptTests(unittest.TestCase):
             })
         }
         dictionary['actions'] = {}
-        script = Script(dictionary)
+        script = Script("script1", dictionary)
         
         self.assertEqual(script.conditions_hash, "race/family/DeviceA:trigger1&this-is-a-field=10")
         self.assertEqual(script.conditions_tree, {'race/family': {'DeviceA': {'trigger1': {'this-is-a-field': 10}}}})
