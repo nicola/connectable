@@ -1,31 +1,31 @@
 from droidable.device import Device
-from droidable.device import DeviceCollection
+from droidable.collection import Collection
 
 import unittest
 
-class InputCollectionTests(unittest.TestCase):
+class CollectionTests(unittest.TestCase):
     def test_add(self):
-        inputs = DeviceCollection()
+        collection = Collection()
         self.added = []
-        def add(name): self.added.append(name)
-        inputs.onAdded += add
-        inputs.add('sensors/bluetooth', 'path1')
-        input1 = inputs.get('sensors/bluetooth')
-        self.assertEqual(input1.path, 'path1')
-        self.assertEqual(self.added, ['sensors/bluetooth'])
+        def add(ID): self.added.append(ID)
+        collection.onAdded += add
+        collection.add({"ID": '1', "test": "su"})
+        element1 = collection.get('1')
+        self.assertEqual(element1['ID'], '1')
+        self.assertEqual(self.added, ['1'])
         
-        inputs.add(Device('sensors/wifi', 'path2'))
-        input2 = inputs.get('sensors/wifi')
-        self.assertEqual(input2.path, 'path2')
-        self.assertEqual(self.added, ['sensors/bluetooth','sensors/wifi'])
+        collection.add({"ID": '2'})
+        element2 = collection.get('2')
+        self.assertEqual(element2['ID'], '2')
+        self.assertEqual(self.added, ['1','2'])
         
     def test_remove(self):
-        inputs = DeviceCollection()
-        def remove(name): self.removed = name
-        inputs.onRemoved += remove
-        inputs.add('sensors/bluetooth', 'path')
-        inputs.remove('sensors/bluetooth')
-        self.assertFalse('sensor/rangefinder' in inputs.collection())
+        collection = Collection()
+        def remove(ID): self.removed = ID
+        collection.onRemoved += remove
+        collection.add({"ID": '1', "test": 2})
+        collection.remove('1')
+        self.assertFalse('1' in collection.collection())
 
 def main():
     unittest.main()

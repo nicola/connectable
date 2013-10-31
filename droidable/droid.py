@@ -1,15 +1,10 @@
 from droidable.hook import EventHook
-from droidable.device import DeviceCollection
+from droidable.collection import Collection
 
 class Droid:
     """Creates a droid"""
-    _devices = DeviceCollection()
-    
-    def plug(self):
-        pass
-    
-    def unplug(self):
-        pass
+    _devices = Collection()
+    _scripts = Collection()
         
     def __init__(self, name):
-        self.name = name
+        pass
