@@ -1,4 +1,4 @@
-from droidable.hook import EventHook
+from connectable.hook import EventHook
 
 class Collection(object):
     onAdded = EventHook()

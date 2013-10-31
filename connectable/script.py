@@ -1,5 +1,5 @@
-from droidable.device import Trigger
-from droidable.device import Action
+from connectable.device import Trigger
+from connectable.device import Action
 
 
 # [familydevice]

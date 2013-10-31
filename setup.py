@@ -6,11 +6,11 @@ except ImportError:
     from distutils.command import build_ext
 
 setup(
-    name='Droidable',
+    name='connectable',
     version='0.1.0dev',
     author='Nicola Greco',
     author_email='notsecurity@gmail.com',
-    packages=['droidable','droidable.test'],
+    packages=['connectable','connectable.test'],
     license='LICENSE.txt',
     long_description=open('README.md').read()
 )

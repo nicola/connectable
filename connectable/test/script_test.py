@@ -1,6 +1,6 @@
-from droidable.script import Script
-from droidable.device import Device
-from droidable.device import Trigger
+from connectable.script import Script
+from connectable.device import Device
+from connectable.device import Trigger
 import unittest
 
 class ScriptTests(unittest.TestCase):

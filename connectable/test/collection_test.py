@@ -1,5 +1,5 @@
-from droidable.device import Device
-from droidable.collection import Collection
+from connectable.device import Device
+from connectable.collection import Collection
 
 import unittest
 

@@ -1,4 +1,4 @@
-from droidable.droid import Droid
+from connectable.droid import Droid
 a = Droid()
 a.add_input("a", "b")
 c =  a.inputs()

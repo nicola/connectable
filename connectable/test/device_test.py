@@ -1,4 +1,4 @@
-from droidable.device import Device
+from connectable.device import Device
 import unittest
 
 class DeviceTests(unittest.TestCase):
