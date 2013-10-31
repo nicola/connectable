@@ -1,8 +1,6 @@
 # Droidable
 
-Droinable is an open source library written in Python that connects devices, sensors and apps in unique place (computer, mobile phone, watch), transforming the device into a droid that executes some actions at given triggers.
-
-Droidable is an open source library writtern in Python that makes connectable and programmable sensors, devices and apps. Deploying it to a computer, mobile, watch, it transform your device into a droid that execute some actions at some given triggers.
+Droidable is an open source library writtern in Python that makes sensors, devices and apps connectable and programmable. Deploying it to a computer, mobile, watch, it transform your device into a droid that execute some actions at some given triggers.
 
 ## Proof of concept
 Here are two main examples when Droidable is applied to a smart house / house automation system through a Raspberry PI and to a life-logging watch with body sensors.
