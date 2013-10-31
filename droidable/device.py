@@ -3,24 +3,21 @@ class Property(object):
         if ('name'      in dictionary):   self.name = dictionary['name']
         if ('fields'    in dictionary): self.fields = dictionary['fields']
 
-class Trigger(object):
+class Trigger(Property):
     def __init__(self, dictionary):
-        Property.__init__(self, dictionary);
+        super(Trigger, self).__init__(dictionary)
         
-class Action(object):
+class Action(Property):
     def __init__(self, dictionary):
-        Property.__init__(self, dictionary);
+        super(Action, self).__init__(dictionary)
         
 
 class Device(object):
-    def __init__(self, ID, dictionary):
+    def __init__(self, ID, dictionary = {}):
         self.ID = ID
-        if (path is not None):
-            self.device = self.name = dictionary;
-            self.path = path
             
         if ('name'    in dictionary):     self.name = dictionary['name']
         if ('mac'     in dictionary):      self.mac = dictionary['mac']
         if ('type'    in dictionary):     self.type = dictionary['type']
-        if ('triggers'in dictionary): self.triggers = Trigger(dictionary['triggers'])
-        if ('actions' in dictionary):  self.actions = Action(dictionary['actions'])
+        if ('triggers'in dictionary): self.triggers = map((lambda el: Trigger(el)), dictionary['triggers'])
+        if ('actions' in dictionary):  self.actions = map((lambda trigger: Action(el)), dictionary['actions'])
