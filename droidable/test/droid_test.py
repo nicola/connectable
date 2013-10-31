@@ -1,10 +1,11 @@
-from droidable.iocollection import InputCollection
 from droidable.device import Device
+from droidable.device import DeviceCollection
+
 import unittest
 
 class InputCollectionTests(unittest.TestCase):
     def test_add(self):
-        inputs = InputCollection()
+        inputs = DeviceCollection()
         self.added = []
         def add(name): self.added.append(name)
         inputs.onAdded += add
@@ -19,7 +20,7 @@ class InputCollectionTests(unittest.TestCase):
         self.assertEqual(self.added, ['sensors/bluetooth','sensors/wifi'])
         
     def test_remove(self):
-        inputs = InputCollection()
+        inputs = DeviceCollection()
         def remove(name): self.removed = name
         inputs.onRemoved += remove
         inputs.add('sensors/bluetooth', 'path')

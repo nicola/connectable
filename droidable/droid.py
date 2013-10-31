@@ -1,11 +1,9 @@
 from droidable.hook import EventHook
-from droidable.iocollection import InputCollection
-from droidable.iocollection import OutputCollection
+from droidable.device import DeviceCollection
 
 class Droid:
     """Creates a droid"""
-    _inputs = InputCollection()
-    _outputs = OutputCollection()
+    devices = DeviceCollection()
 
     def run(self):
         
