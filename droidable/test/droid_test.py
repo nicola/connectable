@@ -1,18 +1,25 @@
-from droidable.iocollection import IOCollection
+from droidable.iocollection import InputCollection
+from droidable.device import Device
 import unittest
 
-class IOCollectionTests(unittest.TestCase):
+class InputCollectionTests(unittest.TestCase):
     def test_add(self):
-        inputs = IOCollection()
-        def add(name): self.added = name
+        inputs = InputCollection()
+        self.added = []
+        def add(name): self.added.append(name)
         inputs.onAdded += add
-        inputs.add('sensors/bluetooth', 'path')
+        inputs.add('sensors/bluetooth', 'path1')
+        input1 = inputs.get('sensors/bluetooth')
+        self.assertEqual(input1.path, 'path1')
+        self.assertEqual(self.added, ['sensors/bluetooth'])
         
-        self.assertEqual(inputs.get('sensors/bluetooth'), 'path')
-        self.assertEqual(self.added, 'sensors/bluetooth')
+        inputs.add(Device('sensors/wifi', 'path2'))
+        input2 = inputs.get('sensors/wifi')
+        self.assertEqual(input2.path, 'path2')
+        self.assertEqual(self.added, ['sensors/bluetooth','sensors/wifi'])
         
     def test_remove(self):
-        inputs = IOCollection()
+        inputs = InputCollection()
         def remove(name): self.removed = name
         inputs.onRemoved += remove
         inputs.add('sensors/bluetooth', 'path')
