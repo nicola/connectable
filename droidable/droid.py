@@ -8,3 +8,6 @@ class Droid:
         
     def __init__(self, name):
         pass
+        
+    def add_device (self, device):
+        _devices.add(device)

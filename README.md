@@ -5,10 +5,10 @@ Droidable is an open source library writtern in Python that makes sensors, devic
 ## Proof of concept
 Here are two main examples when Droidable is applied to a smart house / house automation system through a Raspberry PI and to a life-logging watch with body sensors.
 
->  When (I am entering the house AND it is 5pm AND I am with Kapil) than (play Snoop Dogg)
+>  When (I am entering the house AND it is 5pm AND I am with Kapil) then (play Snoop Dogg)
 
  
->  When (I am running AND heart beat is > 80bps) than (send me a message to have a break)
+>  When (I am running AND heart beat is > 80bps) then (send me a message to have a break)
  
 
 ## Structure
