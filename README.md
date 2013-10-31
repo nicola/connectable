@@ -24,10 +24,10 @@ When a trigger occurs, an action is executed.
 ```
 // Blood pressure sensor example with 2 triggers
 {
-  device: "sensors/bloodpressure",
+  family: "sensors/bloodpressure",
   name: "Blood pressure sensor",
   mac: "20:c9:d0:7d:05:11",
-  triggers: [{
+  triggers: {
     "bloodpressure-in-range": {
       name:"Bloodpress is less than",
       "fields": {
@@ -37,7 +37,7 @@ When a trigger occurs, an action is executed.
     },
     "bloodpressure-increases": {}
     [...]
-  }],
+  },
   actions: []
 }
 ```
@@ -49,11 +49,11 @@ Action
 ```
 // Music player with one trigger
 {
-  device: "device/stereo",
+  family: "device/stereo",
   name: "Music player",
   mac: "20:c9:d0:7d:05:11",
-  triggers: [],
-  actions: [{
+  triggers: {},
+  actions: {
     "play_song": {
       "song-id": String,
       "volume": Number
@@ -61,6 +61,6 @@ Action
     "volume": {
       "value": Number
     }
-  }]
+  }
 }
 ```

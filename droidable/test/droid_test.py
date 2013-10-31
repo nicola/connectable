@@ -1,13 +1,11 @@
-from droidable.device import Device
+from droidable.droid import Droid
 
 import unittest
 
 class DroidTests(unittest.TestCase):
-    def test_add(self):
-        pass
+    def test_init(self):
+        Droid()
         
-    def test_remove(self):
-        pass
 
 def main():
     unittest.main()
