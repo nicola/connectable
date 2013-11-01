@@ -10,10 +10,6 @@ from connectable.device import Action
 
 
 class Script:
-    triggers = {}
-    actions = {}
-    conditions_hash = ""
-    conditions_tree = {}
     def __init__(self, ID, dictionary):
         # TODO accept also objects
         self.ID = ID

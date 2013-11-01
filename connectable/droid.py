@@ -16,16 +16,16 @@ def deepupdate(original, update):
 
 class Droid:
     """Creates a droid"""
-    _devices = {}
-    _scripts = {}
-    _conditions_tree = {}
-    conditions_hashes = {}
-    
-    # Grouped by kind
-    _triggers = {}
-    _actions = {}
         
     def __init__(self, name = ""):
+        self._devices = {}
+        self._scripts = {}
+        self.conditions_tree = {}
+        self.conditions_hashes = {}
+    
+        # Grouped by kind
+        self._triggers = {}
+        self._actions = {}
         self.generate_conditions()
         
     def add_device (self, device):
@@ -40,7 +40,7 @@ class Droid:
         self.conditions_tree = {}
         for (script_name, script) in self._scripts.iteritems():
             self.conditions_hashes[script.conditions_hash] = script.actions
-            deepupdate(self.conditions_tree, script.conditions_tree)
+            self.conditions_tree = deepupdate(self.conditions_tree, script.conditions_tree)
         
     def run():
         print "Droid running"

@@ -1,10 +1,10 @@
 from connectable.hook import EventHook
 
 class Collection(object):
-    onAdded = EventHook()
-    onRemoved = EventHook()
 
     def __init__(self, collection = {}):
+        self.onAdded = EventHook()
+        self.onRemoved = EventHook()
         self._collection = collection
 
     def get(self, ID):

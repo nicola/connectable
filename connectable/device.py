@@ -14,9 +14,9 @@ class Action(Property):
         
 
 class Device(object):
-    triggers = {}
-    actions = {}
     def __init__(self, ID, dictionary = {}):
+        self.triggers = {}
+        self.actions = {}
         self.ID = ID
         self.kind = dictionary['kind']
             
