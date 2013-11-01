@@ -14,6 +14,10 @@ class DroidTests(unittest.TestCase):
         'kind': "family/name",
         'triggers': {'trigger1'}
     })
+    device_family_name2_A = Device("Device XYZ", {
+        'kind': "family/name2",
+        'triggers': {'trigger1'}
+    })
     scriptA = Script("ScriptA", {
         'triggers': {
             'trigger1' : Trigger(deviceA, {
@@ -33,6 +37,14 @@ class DroidTests(unittest.TestCase):
     scriptC = Script("ScriptC", {
         'triggers': {
             'trigger2' : Trigger(deviceB, {
+                'fields': {'field2': 2}     
+            })
+        },
+        'actions': {}
+    })
+    scriptD = Script("ScriptC", {
+        'triggers': {
+            'trigger2' : Trigger(device_family_name2_A, {
                 'fields': {'field2': 2}     
             })
         },
@@ -74,6 +86,18 @@ class DroidTests(unittest.TestCase):
         self.assertEqual(droid.conditions_hashes, {'family/name/DeviceA:trigger2&field2=2': {}, 'family/name/DeviceA:trigger1&field1=1': {}, 'family/name/DeviceB:trigger2&field2=2': {}})
         print droid.conditions_tree
         self.assertEqual(droid.conditions_tree, {'family/name': {'DeviceA': {'trigger1': {'field1': 1}, 'trigger2': {'field2': 2}}, 'DeviceB': {'trigger2': {'field2': 2}}}})
+        
+    def test_add_script_multiple_different_device_different_family(self):
+        droid = Droid()
+        droid.add_device(self.deviceA)
+        droid.add_device(self.deviceB)
+        droid.add_device(self.device_family_name2_A)
+        droid.add_script(self.scriptA)
+        droid.add_script(self.scriptB)
+        droid.add_script(self.scriptC)
+        droid.add_script(self.scriptD)
+        self.assertEqual(droid.conditions_hashes, {'family/name/DeviceA:trigger2&field2=2': {}, 'family/name2/Device XYZ:trigger2&field2=2': {}, 'family/name/DeviceA:trigger1&field1=1': {}})
+        self.assertEqual(droid.conditions_tree, {'family/name2': {'Device XYZ': {'trigger2': {'field2': 2}}}, 'family/name': {'DeviceA': {'trigger1': {'field1': 1}, 'trigger2': {'field2': 2}}}})
 
 def main():
     unittest.main()
