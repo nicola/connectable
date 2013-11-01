@@ -1,11 +1,11 @@
-from connectable.droid import Droid
+from connectable.connector import Connector
 from connectable.device import Device
 from connectable.device import Trigger
 from connectable.script import Script
 
 import unittest
 
-class DroidTests(unittest.TestCase):
+class ConnectorTests(unittest.TestCase):
     deviceA = Device("DeviceA", {
         'kind': "family/name",
         'triggers': {'trigger1'}
@@ -51,15 +51,15 @@ class DroidTests(unittest.TestCase):
         'actions': {}
     })
     def test_init(self):
-        droid = Droid()
+        droid = Connector()
     
     def test_add_device(self):
-        droid = Droid()
+        droid = Connector()
         droid.add_device(self.deviceA)
         self.assertEqual(len(droid._devices), 1)
 
     def test_add_script_one(self):
-        droid = Droid()
+        droid = Connector()
         droid.add_device(self.deviceA)
         droid.add_script(self.scriptA)
         print droid._scripts
@@ -69,7 +69,7 @@ class DroidTests(unittest.TestCase):
         self.assertEqual(droid.conditions_tree, {'family/name': {'DeviceA': {'trigger1': {'field1': 1}}}})
 
     def test_add_script_multiple_same_device(self):
-        droid = Droid()
+        droid = Connector()
         droid.add_device(self.deviceA)
         droid.add_script(self.scriptA)
         droid.add_script(self.scriptB)
@@ -77,7 +77,7 @@ class DroidTests(unittest.TestCase):
         self.assertEqual(droid.conditions_tree, {'family/name': {'DeviceA': {'trigger1': {'field1': 1}, 'trigger2': {'field2': 2}}}})
 
     def test_add_script_multiple_different_device_same_family(self):
-        droid = Droid()
+        droid = Connector()
         droid.add_device(self.deviceA)
         droid.add_device(self.deviceB)
         droid.add_script(self.scriptA)
@@ -88,7 +88,7 @@ class DroidTests(unittest.TestCase):
         self.assertEqual(droid.conditions_tree, {'family/name': {'DeviceA': {'trigger1': {'field1': 1}, 'trigger2': {'field2': 2}}, 'DeviceB': {'trigger2': {'field2': 2}}}})
         
     def test_add_script_multiple_different_device_different_family(self):
-        droid = Droid()
+        droid = Connector()
         droid.add_device(self.deviceA)
         droid.add_device(self.deviceB)
         droid.add_device(self.device_family_name2_A)

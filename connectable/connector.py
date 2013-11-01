@@ -14,7 +14,7 @@ def deepupdate(original, update):
             deepupdate(value, update[key]) 
     return update
 
-class Droid:
+class Connector:
     """Creates a droid"""
         
     def __init__(self, name = ""):
@@ -43,7 +43,7 @@ class Droid:
             self.conditions_tree = deepupdate(self.conditions_tree, script.conditions_tree)
         
     def run():
-        print "Droid running"
+        print "Connector running"
         
         for script in self._scripts: 
             pass            

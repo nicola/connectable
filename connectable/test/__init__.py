@@ -1,2 +1,2 @@
-__all__ = ['droid_test']
+__all__ = ['collection_test', 'connector_test', 'device_test', 'script_test']
 

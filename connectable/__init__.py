@@ -1,2 +1,2 @@
-__all__ = ['droid', 'hook']
+__all__ = ['connector', 'hook', 'device', 'script', 'collection']
 
