@@ -1,3 +1,5 @@
+
+
 from connectable.connector import Connector
 from connectable.device import Device
 from connectable.device import Trigger
@@ -7,18 +9,15 @@ import unittest
 
 class ConnectorTests(unittest.TestCase):
     deviceA = Device("DeviceA", {
-        'kind': "family/name",
+        'kind': "familyA/name",
         'triggers': {'trigger1'}
     })
     deviceB = Device("DeviceB", {
-        'kind': "family/name",
+        'kind': "familyB/name",
         'triggers': {'trigger1'}
     })
-    device_family_name2_A = Device("Device XYZ", {
-        'kind': "family/name2",
-        'triggers': {'trigger1'}
-    })
-    scriptA = Script("ScriptA", {
+
+    script_one_trigger = Script("script_one_trigger", {
         'triggers': {
             'trigger1' : Trigger(deviceA, {
                 'fields': {'field1': 1}     
@@ -26,30 +25,52 @@ class ConnectorTests(unittest.TestCase):
         },
         'actions': {}
     })
-    scriptB = Script("ScriptB", {
+    script_two_trigger_same_device = Script("script_two_trigger_same_device", {
         'triggers': {
+            'trigger1' : Trigger(deviceA, {
+                'fields': {'field2': 2}     
+            }),
             'trigger2' : Trigger(deviceA, {
                 'fields': {'field2': 2}     
             })
         },
         'actions': {}
     })
-    scriptC = Script("ScriptC", {
+    script_two_triggers_different_device = Script("ScriptC", {
         'triggers': {
+            'trigger1' : Trigger(deviceA, {
+                'fields': {'field2': 2}     
+            }),
             'trigger2' : Trigger(deviceB, {
                 'fields': {'field2': 2}     
             })
         },
         'actions': {}
     })
-    scriptD = Script("ScriptC", {
+    
+    scriptMultipleTriggers = Script("ScriptMultipleTrigger", {
         'triggers': {
-            'trigger2' : Trigger(device_family_name2_A, {
-                'fields': {'field2': 2}     
+            'first' : Trigger(deviceA, {
+                'fields': { 'field1': 1, 'field2': 2}
+            }),
+            'second' : Trigger(deviceA, {
+                'fields': { 'field3': 1, 'field4': 2}
             })
         },
-        'actions': {}
+        'actions': {
+            
+        }
     })
+    
+   
+    # script
+    #     .when("Device").has("event", "field1" == 3)
+    #     .when("Device").has("event", "field1" == 3)
+    #     .then()
+    #     .select("Device").do("action", "parameter1", "parameter2")
+    
+
+    
     def test_init(self):
         droid = Connector()
     
@@ -58,47 +79,32 @@ class ConnectorTests(unittest.TestCase):
         droid.add_device(self.deviceA)
         self.assertEqual(len(droid._devices), 1)
 
-    def test_add_script_one(self):
+    def test_add_script_one_trigger(self):
         droid = Connector()
         droid.add_device(self.deviceA)
-        droid.add_script(self.scriptA)
+        droid.add_script(self.script_one_trigger)
         print droid._scripts
         self.assertEqual(len(droid._scripts), 1)
-        
-        self.assertEqual(droid.conditions_hashes, {'family/name/DeviceA:trigger1&field1=1':{}})
-        self.assertEqual(droid.conditions_tree, {'family/name': {'DeviceA': {'trigger1': {'field1': 1}}}})
-
-    def test_add_script_multiple_same_device(self):
-        droid = Connector()
-        droid.add_device(self.deviceA)
-        droid.add_script(self.scriptA)
-        droid.add_script(self.scriptB)
-        self.assertEqual(droid.conditions_hashes, {'family/name/DeviceA:trigger2&field2=2': {}, 'family/name/DeviceA:trigger1&field1=1': {}})
-        self.assertEqual(droid.conditions_tree, {'family/name': {'DeviceA': {'trigger1': {'field1': 1}, 'trigger2': {'field2': 2}}}})
-
-    def test_add_script_multiple_different_device_same_family(self):
-        droid = Connector()
-        droid.add_device(self.deviceA)
-        droid.add_device(self.deviceB)
-        droid.add_script(self.scriptA)
-        droid.add_script(self.scriptB)
-        droid.add_script(self.scriptC)
-        self.assertEqual(droid.conditions_hashes, {'family/name/DeviceA:trigger2&field2=2': {}, 'family/name/DeviceA:trigger1&field1=1': {}, 'family/name/DeviceB:trigger2&field2=2': {}})
         print droid.conditions_tree
-        self.assertEqual(droid.conditions_tree, {'family/name': {'DeviceA': {'trigger1': {'field1': 1}, 'trigger2': {'field2': 2}}, 'DeviceB': {'trigger2': {'field2': 2}}}})
+        self.assertEqual(droid.conditions_tree, {'script_one_trigger': {'familyA/name': {'DeviceA': {'trigger1': {'field1': 1}}}}})
         
-    def test_add_script_multiple_different_device_different_family(self):
+    def test_add_script_two_trigger_same_device(self):
+        droid = Connector()
+        droid.add_device(self.deviceA)
+        droid.add_script(self.script_two_trigger_same_device)
+        print droid.conditions_tree
+        self.assertEqual(droid.conditions_tree, {'script_two_trigger_same_device': {'familyA/name': {'DeviceA': {'trigger1': {'field2': 2}, 'trigger2': {'field2': 2}}}}})
+        
+
+    def test_add_script_two_triggers_different_device(self):
         droid = Connector()
         droid.add_device(self.deviceA)
         droid.add_device(self.deviceB)
-        droid.add_device(self.device_family_name2_A)
-        droid.add_script(self.scriptA)
-        droid.add_script(self.scriptB)
-        droid.add_script(self.scriptC)
-        droid.add_script(self.scriptD)
-        self.assertEqual(droid.conditions_hashes, {'family/name/DeviceA:trigger2&field2=2': {}, 'family/name2/Device XYZ:trigger2&field2=2': {}, 'family/name/DeviceA:trigger1&field1=1': {}})
-        self.assertEqual(droid.conditions_tree, {'family/name2': {'Device XYZ': {'trigger2': {'field2': 2}}}, 'family/name': {'DeviceA': {'trigger1': {'field1': 1}, 'trigger2': {'field2': 2}}}})
+        droid.add_script(self.script_two_triggers_different_device)
+        print droid.conditions_tree
+        self.assertEqual(droid.conditions_tree, {'ScriptC': {'familyA/name': {'DeviceA': {'trigger1': {'field2': 2}}}, 'familyB/name': {'DeviceB': {'trigger2': {'field2': 2}}}}})
 
+  
 def main():
     unittest.main()
 

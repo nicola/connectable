@@ -5,7 +5,7 @@ from connectable.device import Action
 # [familydevice]
 #     [device]
 #         [trigger/action]
-#             [fieldsHash]
+#             fieldsObj
 # familydevice/device:value:fieldsHash
 
 
@@ -18,15 +18,14 @@ class Script:
         self.generate_conditions()
     
     def generate_conditions (self):
-        conditions_hash = ""
         conditions_tree = {}
         for trigger_name, trigger in self.triggers.iteritems():
-            conditions_hash = trigger.device.kind + "/" + trigger.device.ID + ":" + trigger_name
-            conditions_tree[trigger.device.kind] = {}
-            conditions_tree[trigger.device.kind][trigger.device.ID] = {}
+            
+            if (trigger.device.kind not in conditions_tree):
+                conditions_tree[trigger.device.kind] = {}
+            if (trigger.device.ID not in conditions_tree[trigger.device.kind]):
+                conditions_tree[trigger.device.kind][trigger.device.ID] = {}
+
             conditions_tree[trigger.device.kind][trigger.device.ID][trigger_name] = trigger.fields
-            for (field_name, field) in trigger.fields.iteritems():
-                conditions_hash = conditions_hash + "&" + field_name + "=" + str(field)
-        
-        self.conditions_hash = conditions_hash
+
         self.conditions_tree = conditions_tree
