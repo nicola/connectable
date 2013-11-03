@@ -25,6 +25,7 @@ class Connector:
         self._devices[device.kind][device.ID] = device
         
     def device_with_ID(self, ID):
+        """Check amongst all the device, one with ID=ID"""
         for (device_family_name, device_family) in self._devices.iteritems():
             if (ID in device_family):
                 return device_family[ID]
@@ -32,6 +33,7 @@ class Connector:
                 return False
 
     def link_from_object(self, prop):
+        """Linking function: From a device object return the one in _devices"""
         # TODO check if property exists
         if (prop.device.kind in self._devices and prop.device.ID in self._devices[prop.device.kind]):
             return self._devices[prop.device.kind][prop.device.ID]
@@ -39,6 +41,7 @@ class Connector:
             return False
 
     def link_from_string(self, prop_name, prop):
+        """Linking function: From an id or kind return the closest corresponding one in _devices"""
         device = self.device_with_ID(prop.device)
         if (device):
             if (isinstance(prop, Trigger) and prop_name in device.triggers): return device
@@ -53,12 +56,14 @@ class Connector:
         raise
 
     def link_connectable(self, prop_name, prop):
+        """Linking function: returns a device in _devices given the reference in a Script"""
         if (isinstance(prop.device, Device)):
             return self.link_from_object(prop)
 
         return self.link_from_string(prop_name, prop)
             
     def link_connectables(self, script):
+        """Linking functions: connects connectable to the script"""
         for trigger_name, trigger in script.triggers.iteritems():
             trigger.device = self.link_connectable(trigger_name, trigger)
             
@@ -90,7 +95,7 @@ class Connector:
         self.conditions_tree = conditions_tree
         
     def generate_conditions(self):
-        
+        """Generates a tree with all the trigger conditions"""
         conditions_tree = {}
         
         for (script_name, script) in self._scripts.iteritems():
