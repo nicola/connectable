@@ -64,3 +64,24 @@ Action
   }
 }
 ```
+
+### Scripting language
+A jQuery inspired scripting language (temporarely called RennieScript) will be used to generate script.json files:
+
+```
+ script = connectable.Script()
+ script
+     .when("DeviceA","trigger1", {field1: 1})
+     .when("DeviceA","trigger2", {field1: 1})
+     .then("DeviceB", "action1")
+     .then("DeviceB", "action2")
+```
+
+And for creating devices
+
+```
+ device = connectable.Device("DeviceA")
+ device
+     .trigger("trigger1", {field1: 1}, listening_function)
+     .action("DeviceB", "action1", function_reference)
+```
