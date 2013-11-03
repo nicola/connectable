@@ -1,6 +1,6 @@
 # connectable
 
-connectable is an open source library writtern in Python that makes sensors, devices and apps connectable and programmable. Deploying it to a computer, mobile, watch, it transform your device into a droid that execute some actions at some given triggers.
+Connectable defines a standard to connect triggers and actions of hardware and software, making everything around you connectable and programmable.
 
 ## Proof of concept
 Here are two main examples when connectable is applied to a smart house / house automation system through a Raspberry PI and to a life-logging watch with body sensors.
@@ -71,17 +71,34 @@ A jQuery inspired scripting language (temporarely called RennieScript) will be u
 ```
  script = connectable.Script()
  script
-     .when("DeviceA","trigger1", {field1: 1})
-     .when("DeviceA","trigger2", {field1: 1})
-     .then("DeviceB", "action1")
-     .then("DeviceB", "action2")
+     .when(IDCardScanner,"scanned_card", {people: ["Kapil"]})
+     .when(TimeSensor,"current_time", {hour: "12pm"})
+     .then(HiFi, "play", "Snoop Dogg")
+     .then(LightDimmer, "dim", "30%")
 ```
 
 And for creating devices
 
 ```
- device = connectable.Device("DeviceA")
+ device = connectable.Device("Camera")
  device
-     .trigger("trigger1", {field1: 1}, listening_function)
-     .action("DeviceB", "action1", function_reference)
+     .trigger("shoot_pressed", {pressed: Boolean}, listen_shoot, execute_at_shooting)
+     .trigger("face_recognised", {people: [String]}, listen_camera_for_recognition, execute_when_person_is_recognised)
+     .action("take_picture", "", execute_after_picture_taken)
+```
+
+For reading sensors
+
+```
+ heartbeat = connectable.Device("health/heartbeat", "Heartbeat_sensor")
+ heartbeat.read("get_heartbeat")
+ // {now: "27"}
+ hifi.read("Stereo", "current_volume")
+ // {volume: "80%"}
+```
+
+Performing actions
+
+```
+ hifi.do("volume", "90%")
 ```

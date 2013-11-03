@@ -75,13 +75,15 @@ class ConnectorTests(unittest.TestCase):
         droid.add_device(self.deviceA)
         droid.add_script(self.script_one_trigger)
         self.assertEqual(len(droid._scripts), 1)
+        self.assertEqual(len(droid._devices), 1)
         self.assertEqual(droid.conditions_tree, {'script_one_trigger': {'familyA/name': {'DeviceA': {'trigger1': {'field1': 1}}}}})
         
     def test_add_script_two_trigger_same_device(self):
         droid = Connector()
         droid.add_device(self.deviceA)
         droid.add_script(self.script_two_trigger_same_device)
-        self.assertEqual(len(droid._scripts), 2)
+        self.assertEqual(len(droid._scripts), 1)
+        self.assertEqual(len(droid._devices), 1)
         self.assertEqual(droid.conditions_tree, {'script_two_trigger_same_device': {'familyA/name': {'DeviceA': {'trigger1': {'field2': 2}, 'trigger2': {'field2': 2}}}}})
         
 
@@ -90,7 +92,8 @@ class ConnectorTests(unittest.TestCase):
         droid.add_device(self.deviceA)
         droid.add_device(self.deviceB)
         droid.add_script(self.script_two_triggers_different_device)
-        self.assertEqual(len(droid._scripts), 2)
+        self.assertEqual(len(droid._scripts), 1)
+        self.assertEqual(len(droid._devices), 2)
         self.assertEqual(droid.conditions_tree, {'ScriptC': {'familyA/name': {'DeviceA': {'trigger1': {'field2': 2}}}, 'familyB/name': {'DeviceB': {'trigger2': {'field2': 2}}}}})
 
   

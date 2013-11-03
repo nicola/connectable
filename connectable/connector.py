@@ -52,13 +52,16 @@ class Connector:
             for device in self._devices[prop.device]:
                 if (isinstance(prop, Trigger) and prop_name in device.triggers): return device
                 if (isinstance(prop, Action) and prop_name in device.actions): return device
-
+                
+        # TODO error raised to be improved
         raise
 
     def link_connectable(self, prop_name, prop):
         """Linking function: returns a device in _devices given the reference in a Script"""
         if (isinstance(prop.device, Device)):
             return self.link_from_object(prop)
+            
+        # TODO what about dictionaries?
 
         return self.link_from_string(prop_name, prop)
             
